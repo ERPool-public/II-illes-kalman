@@ -1,30 +1,49 @@
 <template>
+    <v-app id="app">
+      <v-navigation-drawer app clipped>
+        <v-list>
+          <v-list-item to="/">
+            <v-list-item-content>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
+          <v-list-item to="/about">
+            <v-list-item-content>
+              <v-list-item-title>About</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-<div>
-  <b-navbar type="dark" variant="dark">
-    <b-navbar-nav>
-      <b-nav-item href="#">Home</b-nav-item>
+          <v-list-item to="/contact">
+            <v-list-item-content>
+              <v-list-item-title>Contact</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
 
-      <!-- Navbar dropdowns -->
-      <b-nav-item-dropdown text="Lang" right>
-        <b-dropdown-item href="#">EN</b-dropdown-item>
-        <b-dropdown-item href="#">ES</b-dropdown-item>
-        <b-dropdown-item href="#">RU</b-dropdown-item>
-        <b-dropdown-item href="#">FA</b-dropdown-item>
-      </b-nav-item-dropdown>
+      <v-app-bar app clipped-left>
+        <v-toolbar-title>Felső menü</v-toolbar-title>
+        <v-spacer></v-spacer>
 
-      <b-nav-item-dropdown text="User" right>
-        <b-dropdown-item href="#">Account</b-dropdown-item>
-        <b-dropdown-item href="#">Settings</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
-  </b-navbar>
-</div>
-</template>
+        <v-form inline>
+          <v-text-field label="Search" prepend-inner-icon="mdi-magnify"></v-text-field>
+          <v-btn color="primary" type="submit">Search</v-btn>
+        </v-form>
+      </v-app-bar>
 
-<style>
-    @import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
+      <v-content>
+        <router-view></router-view>
+      </v-content>
+    </v-app>
+  </template>
 
+  <script>
+  export default {
+    name: 'TopMenu',
+  };
+  </script>
 
-</style>
+  <style scoped>
+
+  </style>

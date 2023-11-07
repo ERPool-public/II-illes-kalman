@@ -1,7 +1,77 @@
 
+<script>
+
+
+export default {
+
+    components: {
+            TopMenu: TopMenu,
+        },
+
+    data() {
+      return {
+        form: {
+          name: '',
+          oneUnitPrice: 0,
+          threeUnitPrice: 0,
+          fiveUnitPrice: 0,
+        },
+        message: '',
+        products: [],
+
+      };
+    },
+
+    methods: {
+      submitForm() {
+        axios.post('/products/store', this.form)
+          .then(response => {
+            console.log("Sikeres termék felvétel");
+            this.message = "Sikeres termék felvétel";
+            this.form = {
+                name: '',
+                oneUnitPrice: 0,
+                threeUnitPrice: 0,
+                fiveUnitPrice: 0,
+            };
+            this.fetchProducts();
+          })
+          .catch(error => {
+            console.log("Nem sikerült termék felvétele");
+            this.message = "Nem sikerült termék felvétele";
+          });
+      },
+
+      fetchProducts() {
+        axios.get('/products/list')
+            .then(response => {
+            this.products = response.data;
+            })
+            .catch(error => {
+            console.error("Hiba a termékek lekérésekor: " + error);
+            });
+        },
+        },
+        mounted() {
+            this.fetchProducts(); // Oldal betöltésekor termékek lekérése
+        },
+
+
+
+
+  };
+
+
+</script>
+
 
 <template>
-        <top-menu></top-menu>
+
+
+<div>
+    <TopMenu />
+    <router-view></router-view>
+</div>
 
     <div class="container">
       <form @submit.prevent="submitForm">
@@ -56,74 +126,7 @@
   </template>
 
 
-<script setup>
-  import TopMenu from '@/Menus/TopMenu.vue';
-</script>
-
-<script>
-export default {
-
-    components: {
-        'top-menu': TopMenu,
-    },
-
-    data() {
-      return {
-        form: {
-          name: '',
-          oneUnitPrice: 0,
-          threeUnitPrice: 0,
-          fiveUnitPrice: 0,
-        },
-        message: '', // Válaszüzenet inicializálása
-        products: [],
-
-      };
-    },
-
-    methods: {
-      submitForm() {
-        // Az elküldéshez használjuk az axios vagy az inertia.post() funkciót
-        // Példa axios használatra:
-        axios.post('/products/store', this.form)
-          .then(response => {
-            console.log("Sikeres termék felvétel");
-            this.message = "Sikeres termék felvétel";
-            this.form = {
-                name: '',
-                oneUnitPrice: 0,
-                threeUnitPrice: 0,
-                fiveUnitPrice: 0,
-            };
-            this.fetchProducts();
-          })
-          .catch(error => {
-            console.log("Nem sikerült termék felvétele");
-            this.message = "Nem sikerült termék felvétele";
-          });
-      },
-
-      fetchProducts() {
-        axios.get('/products/list')
-            .then(response => {
-            this.products = response.data;
-            })
-            .catch(error => {
-            console.error("Hiba a termékek lekérésekor: " + error);
-            });
-        },
-        },
-        mounted() {
-            this.fetchProducts(); // Oldal betöltésekor termékek lekérése
-        },
-
-
-
-
-  };
-  </script>
 
   <style>
 
   </style>
-
